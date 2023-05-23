@@ -1,64 +1,68 @@
-import { GlobalOutlined } from "@ant-design/icons";
-import { Button, Dropdown, Input, Layout, Menu, Typography } from "antd";
 import React from "react";
 import styles from "./Header.module.css";
 import logo from "../../assets/logo.svg";
+import { Layout, Typography, Input, Menu, Button, Dropdown } from "antd";
+import { GlobalOutlined } from "@ant-design/icons";
 
 export const Header: React.FC = () => {
-  const menu = (
-    <Menu>
-      <Menu.Item>Chinese</Menu.Item>
-      <Menu.Item>English</Menu.Item>
-    </Menu>
-  );
   return (
-    <>
-      <div className={styles["app-header"]}>
-        {/* top-header */}
-        <div className={styles["top-header"]}>
-          <div className={styles.inner}>
-            <Typography.Text>Make Your Travel Happy</Typography.Text>
-            <Dropdown.Button
-              style={{ marginLeft: 15 }}
-              overlay={menu}
-              icon={<GlobalOutlined />}
-              className={styles["inline-dropdown-button"]}
-            >
-              Language
-            </Dropdown.Button>
-            <Button.Group className={styles["button-group"]}>
-              <Button>Signup</Button>
-              <Button>Signin</Button>
-            </Button.Group>
-          </div>
+    <div className={styles["app-header"]}>
+      {/* top-header */}
+      <div className={styles["top-header"]}>
+        <div className={styles.inner}>
+          <Typography.Text>Make Travel Happier</Typography.Text>
+          <Dropdown.Button
+            style={{ marginLeft: 15 }}
+            overlay={
+              <Menu
+                items={[
+                  { key: "1", label: "中文" },
+                  { key: "2", label: "English" },
+                ]}
+              />
+            }
+            icon={<GlobalOutlined />}
+          >
+            语言
+          </Dropdown.Button>
+          <Button.Group className={styles["button-group"]}>
+            <Button>注册</Button>
+            <Button>登陆</Button>
+          </Button.Group>
         </div>
-        <Layout.Header className={styles["main-header"]}>
-          <img src={logo} alt="logo" className={styles["App-logo"]} />
-          <Typography.Title level={3} className={styles.title}>
-            React Travel
-          </Typography.Title>
-          <Input.Search
-            placeholder="Please input your destination!"
-            className={styles["search-input"]}
-          />
-        </Layout.Header>
-        <Menu
-          mode={"horizontal"}
-          className={styles["main-menu"]}
-          items={[
-            { key: 1, label: "Home" },
-            { key: 2, label: "Group" },
-            { key: 3, label: "Personal" },
-            { key: 4, label: "Hotal" },
-            { key: 5, label: "Visa" },
-            { key: 6, label: "Travel Study" },
-            { key: 7, label: "Business" },
-            { key: 8, label: "VIP" },
-            { key: 9, label: "Insurance" },
-            { key: 10, label: "Local" },
-          ]}
-        />
       </div>
-    </>
+      <Layout.Header className={styles["main-header"]}>
+        <img src={logo} alt="logo" className={styles["App-logo"]} />
+        <Typography.Title level={3} className={styles.title}>
+          React旅游网
+        </Typography.Title>
+        <Input.Search
+          placeholder={"请输入旅游目的地、主题、或关键字"}
+          className={styles["search-input"]}
+        />
+      </Layout.Header>
+      <Menu
+        mode={"horizontal"}
+        className={styles["main-menu"]}
+        items={[
+          { key: "1", label: "旅游首页" },
+          { key: "2", label: "周末游" },
+          { key: "3", label: "跟团游" },
+          { key: "4", label: "自由行" },
+          { key: "5", label: "私家团" },
+          { key: "6", label: "邮轮" },
+          { key: "7", label: "酒店+景点" },
+          { key: "8", label: "当地玩乐" },
+          { key: "9", label: "主题游" },
+          { key: "10", label: "定制游" },
+          { key: "11", label: "游学" },
+          { key: "12", label: "签证" },
+          { key: "13", label: "企业游" },
+          { key: "14", label: "高端游" },
+          { key: "15", label: "爱玩户外" },
+          { key: "16", label: "保险" },
+        ]}
+      />
+    </div>
   );
 };
