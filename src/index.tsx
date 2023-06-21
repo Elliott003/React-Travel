@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import axios from "axios";
 
-axios.defaults.headers["x-icode"] = "A2ED42816B4C1B87";
+axios.defaults.headers["x-icode"] = "187123D9E9977E60";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
