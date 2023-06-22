@@ -1,10 +1,11 @@
-import i18n from "../../i18n/configs";
-import { changeLanguage } from "i18next";
-import { CHANGE_LANGUAGE, LanguageActionTypes } from "./lanageActions";
+import i18n from "i18next";
+import { CHANGE_LANGUAGE, ADD_LANGUAGE, LanguageActionTypes } from "./languageActions";
+
 export interface LanguageState {
   language: "en" | "zh";
   languageList: { name: string; code: string }[];
 }
+
 const defaultState: LanguageState = {
   language: "zh",
   languageList: [
@@ -12,10 +13,18 @@ const defaultState: LanguageState = {
     { name: "English", code: "en" },
   ],
 };
+
 export default (state = defaultState, action: LanguageActionTypes) => {
-  if (action.type === CHANGE_LANGUAGE) {
-    i18n.changeLanguage(action.payload);
-    return { ...state, language: action.payload };
+  switch (action.type) {
+    case CHANGE_LANGUAGE:
+      i18n.changeLanguage(action.payload); // 这样处理是不标准的，有副作用
+      return { ...state, language: action.payload };
+    case ADD_LANGUAGE:
+      return {
+        ...state,
+        languageList: [...state.languageList, action.payload],
+      };
+    default:
+      return state;
   }
-  return state;
 };

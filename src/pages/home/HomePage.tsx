@@ -16,12 +16,12 @@ import { withTranslation, WithTranslation } from "react-i18next";
 import axios from "axios";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/store";
-import { giveMeDataActionCreator } from "../../redux/recommendProducts/recommendProductAction";
+import { giveMeDataActionCreator } from "../../redux/recommendProducts/recommendProductsActions";
 import {
   fetchRecommendProductStartActionCreator,
   fetchRecommendProductFailActionCreator,
   fetchRecommendProductSuccessActionCreator,
-} from "../../redux/recommendProducts/recommendProductAction";
+} from "../../redux/recommendProducts/recommendProductsActions";
 
 const mapStateToProps = (state: RootState) => {
   return {

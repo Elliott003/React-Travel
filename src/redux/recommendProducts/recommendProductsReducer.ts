@@ -1,9 +1,9 @@
 import {
-  RecommendProductAction,
+  FETCH_RECOMMEND_PRODUCTS_FAIL,
   FETCH_RECOMMEND_PRODUCTS_START,
   FETCH_RECOMMEND_PRODUCTS_SUCCESS,
-  FETCH_RECOMMEND_PRODUCTS_FAIL,
-} from "./recommendProductAction";
+  RecommendProductAction,
+} from "./recommendProductsActions";
 
 interface RecommendProductsState {
   productList: any[];

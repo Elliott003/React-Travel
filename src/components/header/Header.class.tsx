@@ -6,7 +6,7 @@ import { GlobalOutlined } from "@ant-design/icons";
 import { RouteComponentProps, withRouter } from "../../helpers/withRouter";
 import store, { RootState } from "../../redux/store";
 import { withTranslation, WithTranslation } from "react-i18next";
-import { changeLanguageActionCreator } from "../../redux/language/lanageActions";
+import { changeLanguageActionCreator } from "../../redux/language/languageActions";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 

@@ -1,6 +1,6 @@
-import axios from "axios";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
+import axios from "axios";
 
 export const FETCH_RECOMMEND_PRODUCTS_START = "FETCH_RECOMMEND_PRODUCTS_START"; // 正在调用推荐信息api
 export const FETCH_RECOMMEND_PRODUCTS_SUCCESS =
@@ -51,6 +51,10 @@ export const fetchRecommendProductFailActionCreator = (
   };
 };
 
+// thunk 可以返回一个函数，而不一定是js对象
+// 在一个thunk action中可以完成一些列连续的action操作
+// 并且可以处理异步逻辑
+// 业务逻辑可以从ui层面挪到这里，代码分层会更清晰
 export const giveMeDataActionCreator =
   (): ThunkAction<void, RootState, unknown, RecommendProductAction> =>
   async (dispatch, getState) => {
@@ -61,6 +65,10 @@ export const giveMeDataActionCreator =
       );
       dispatch(fetchRecommendProductSuccessActionCreator(data));
     } catch (error) {
-      dispatch(fetchRecommendProductFailActionCreator(error));
+      dispatch(
+        fetchRecommendProductFailActionCreator(
+          error instanceof Error ? error.message : "error"
+        )
+      );
     }
   };
