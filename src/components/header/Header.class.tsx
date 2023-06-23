@@ -3,12 +3,18 @@ import styles from "./Header.module.css";
 import logo from "../../assets/logo.svg";
 import { Layout, Typography, Input, Menu, Button, Dropdown } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
-import { RouteComponentProps, withRouter } from "../../helpers/withRouter";
-import store, { RootState } from "../../redux/store";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "../../helpers/withRouter";
+import rootStore from "../../redux/store";
+import { LanguageState } from "../../redux/language/languageReducer";
 import { withTranslation, WithTranslation } from "react-i18next";
-import { changeLanguageActionCreator } from "../../redux/language/languageActions";
+import {
+  addLanguageActionCreator,
+  changeLanguageActionCreator,
+} from "../../redux/language/languageActions";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { RootState } from "../../redux/store";
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -23,20 +29,40 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       const action = changeLanguageActionCreator(code);
       dispatch(action);
     },
+    addLanguage: (name: string, code: string) => {
+      const action = addLanguageActionCreator(name, code);
+      dispatch(action);
+    },
   };
 };
 
-type PropsType = RouteComponentProps &
-  WithTranslation &
-  ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+type PropsType = RouteComponentProps & // react-router 路由props类型
+  WithTranslation & // i18n props类型
+  ReturnType<typeof mapStateToProps> & // redux store 映射类型
+  ReturnType<typeof mapDispatchToProps>; // redux dispatch 映射类型
+
+// interface State extends LanguageState {}
 
 class HeaderComponent extends React.Component<PropsType> {
-  menuClickHandler = (e) => {
-    this.props.changeLanguage(e.key);
+  handleStoreChange = () => {
+    const storeState = rootStore.store.getState();
+    this.setState({
+      language: storeState.language.language,
+      languageList: storeState.language.languageList,
+    });
   };
 
-  render() {
+  menuClickHandler = (e) => {
+    console.log(e);
+    if (e.key === "new") {
+      // 处理新语言添加action
+      this.props.addLanguage("新语言", "new_lang");
+    } else {
+      this.props.changeLanguage(e.key);
+    }
+  };
+
+  render(): React.ReactNode {
     const { navigate, t } = this.props;
     return (
       <div className={styles["app-header"]}>
@@ -48,10 +74,13 @@ class HeaderComponent extends React.Component<PropsType> {
               style={{ marginLeft: 15 }}
               overlay={
                 <Menu
-                  items={this.props.languageList.map((l) => {
-                    return { key: l.code, label: l.name };
-                  })}
                   onClick={this.menuClickHandler}
+                  items={[
+                    ...this.props.languageList.map((l) => {
+                      return { key: l.code, label: l.name };
+                    }),
+                    { key: "new", label: t("header.add_new_language") },
+                  ]}
                 />
               }
               icon={<GlobalOutlined />}
@@ -62,7 +91,7 @@ class HeaderComponent extends React.Component<PropsType> {
               <Button onClick={() => navigate("/register")}>
                 {t("header.register")}
               </Button>
-              <Button onClick={() => navigate("/login")}>
+              <Button onClick={() => navigate("/signin")}>
                 {t("header.signin")}
               </Button>
             </Button.Group>
@@ -74,11 +103,11 @@ class HeaderComponent extends React.Component<PropsType> {
             <Typography.Title level={3} className={styles.title}>
               {t("header.title")}
             </Typography.Title>
-            <Input.Search
-              placeholder={"请输入旅游目的地、主题、或关键字"}
-              className={styles["search-input"]}
-            />
           </span>
+          <Input.Search
+            placeholder={"请输入旅游目的地、主题、或关键字"}
+            className={styles["search-input"]}
+          />
         </Layout.Header>
         <Menu
           mode={"horizontal"}
