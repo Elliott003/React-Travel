@@ -14,7 +14,7 @@ import { useSelector } from "./redux/hooks";
 
 const PrivateRoute = ({ children }) => {
   const jwt = useSelector((s) => s.user.token);
-  return jwt ? children : <Navigate to="login" />;
+  return jwt ? children : <Navigate to="/login" />;
 };
 function App() {
   return (
