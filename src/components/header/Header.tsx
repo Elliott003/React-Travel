@@ -51,7 +51,7 @@ export const Header: React.FC = () => {
             <Button onClick={() => navigate("/register")}>
               {t("header.register")}
             </Button>
-            <Button onClick={() => navigate("/signin")}>
+            <Button onClick={() => navigate("/login")}>
               {t("header.signin")}
             </Button>
           </Button.Group>
