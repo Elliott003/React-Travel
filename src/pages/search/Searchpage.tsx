@@ -5,7 +5,7 @@ import { useParams, useLocation } from "react-router-dom";
 import { Spin } from "antd";
 import { searchProduct } from "../../redux/productSearch/slice";
 import { useSelector, useAppDispatch } from "../../redux/hooks";
-import { MainLayout } from "../../layouts/mainLayout/MainLayout";
+import { MainLayout } from "../../layouts/mainLayout";
 
 type MatchParams = {
   keywords: string;

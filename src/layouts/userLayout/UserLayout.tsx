@@ -38,7 +38,9 @@ export const UserLayout: React.FC<PropsTypes> = (props) => {
               <span className={styles["title"]}>React 旅游网</span>
             </Link>
           </div>
-          <div className={styles["desc"]}>this desc</div>
+          <div className={styles["desc"]}>
+            慕课网 是我朝最具影响力的 线上课程学习网站
+          </div>
           {props.children}
         </div>
       </Content>

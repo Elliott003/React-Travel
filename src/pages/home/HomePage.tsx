@@ -1,18 +1,20 @@
 import React from "react";
-import styles from "./HomePage.module.css";
 import {
   Header,
   Footer,
   Carousel,
   SideMenu,
   ProductCollection,
+  BusinessPartners,
 } from "../../components";
 import { Row, Col, Typography, Spin } from "antd";
-import { productList1, productList2, productList3 } from "./mockups";
 import sideImage from "../../assets/images/sider_2019_12-09.png";
 import sideImage2 from "../../assets/images/sider_2019_02-04.png";
 import sideImage3 from "../../assets/images/sider_2019_02-04-2.png";
+import styles from "./HomePage.module.css";
+import { withRouter, RouteComponentProps } from "../../helpers/withRouter";
 import { withTranslation, WithTranslation } from "react-i18next";
+import axios from "axios";
 import { connect } from "react-redux";
 import { RootState } from "../../redux/store";
 import { giveMeDataActionCreator } from "../../redux/recommendProducts/recommendProductsActions";
@@ -42,8 +44,11 @@ class HomePageComponent extends React.Component<PropsType> {
   componentDidMount() {
     this.props.giveMeData();
   }
+
   render(): React.ReactNode {
-    const { t, productList, loading, error } = this.props;
+    // console.log(this.props.navigate)
+    const { t } = this.props;
+    const { productList, loading, error } = this.props;
     if (loading) {
       return (
         <Spin
@@ -59,7 +64,7 @@ class HomePageComponent extends React.Component<PropsType> {
       );
     }
     if (error) {
-      return <div>{error}</div>;
+      return <div>网站出错：{error}</div>;
     }
     return (
       <MainLayout>
@@ -83,7 +88,7 @@ class HomePageComponent extends React.Component<PropsType> {
         <ProductCollection
           title={
             <Typography.Title level={3} type="danger">
-              {t("home_page.new_arrival")}
+              新品上市
             </Typography.Title>
           }
           sideImage={sideImage2}
@@ -92,12 +97,13 @@ class HomePageComponent extends React.Component<PropsType> {
         <ProductCollection
           title={
             <Typography.Title level={3} type="success">
-              {t("home_page.domestic_travel")}
+              国内游推荐
             </Typography.Title>
           }
           sideImage={sideImage3}
           products={productList[2].touristRoutes}
         />
+        <BusinessPartners />
       </MainLayout>
     );
   }
